@@ -1,8 +1,6 @@
 import polars as pl
 from src.utils.paths import RAW_DIR, LOOKUP_DIR
 
-
-
 def create_lsoa_lookup(dataset):
 
     # filter out columns not related to administrative codes
@@ -25,8 +23,8 @@ def create_lsoa_lookup(dataset):
 
     return lsoa_lookup
 
-
 def create_georgraphy_lookup(dataset):
+
     # filter out columns not related to administrative codes
     geography_lookup = dataset.select(['Geo Point',
                                        'Geo Shape',
@@ -59,10 +57,10 @@ if __name__ == '__main__':
     # read in raw dataset
     admin_codes_raw = pl.read_csv(RAW_DIR / 'admin_codes_raw.csv')
 
-    # create and save dataset 1
+    # create and save lsoa lookup file
     lsoa_lookup = create_lsoa_lookup(admin_codes_raw)
     lsoa_lookup.write_csv(LOOKUP_DIR / 'lsoa_lookup.csv')
 
-    # create and save dataset 2
+    # create and save geography lookup file
     geography_lookup = create_georgraphy_lookup(admin_codes_raw)
     geography_lookup.write_csv(LOOKUP_DIR / 'geography_lookup.csv')
