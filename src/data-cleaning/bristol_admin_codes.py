@@ -2,17 +2,18 @@ import polars as pl
 from src.utils.paths import RAW_DIR, LOOKUP_DIR
 
 
-def clean_data(dataset):
 
-    # filter out columns related to administrative codes
-    admin_codes = dataset.select(['LSOA Code',
+def create_lsoa_lookup(dataset):
+
+    # filter out columns not related to administrative codes
+    lsoa_lookup = dataset.select(['LSOA Code',
                                   'MSOA Code',
                                   'Ward code 2024',
                                   'Local Authority Code'])
 
     # rename column names to follow naming conventions
-    bristol_admin_codes = (
-        admin_codes
+    lsoa_lookup = (
+        lsoa_lookup
         .rename({
             'LSOA Code': 'lsoa_code',
             'MSOA Code': 'msoa_code',
@@ -22,13 +23,46 @@ def clean_data(dataset):
         .filter(pl.col('local_authority_code') == 'E06000023')
     )
 
+    return lsoa_lookup
 
-    return bristol_admin_codes
+
+def create_georgraphy_lookup(dataset):
+    # filter out columns not related to administrative codes
+    geography_lookup = dataset.select(['Geo Point',
+                                       'Geo Shape',
+                                       'LSOA Code',
+                                       'Easting',
+                                       'Northing',
+                                       'Longitude',
+                                       'Latitude',
+                                       'Local Authority Code'])
+
+    # rename column names to follow naming conventions
+    geography_lookup = (
+        geography_lookup
+        .rename({
+            'Geo Point': 'geo_point',
+            'Geo Shape': 'geo_shape',
+            'LSOA Code': 'lsoa_code',
+            'Easting': 'easting',
+            'Northing': 'northing',
+            'Longitude': 'longitude',
+            'Latitude': 'latitude',
+            'Local Authority Code': 'local_authority_code'
+        })
+        .filter(pl.col('local_authority_code') == 'E06000023')
+    )
+
+    return geography_lookup
 
 if __name__ == '__main__':
     # read in raw dataset
     admin_codes_raw = pl.read_csv(RAW_DIR / 'admin_codes_raw.csv')
 
-    # clean datasets and save
-    bristol_admin_codes = clean_data(admin_codes_raw)
-    bristol_admin_codes.write_csv(LOOKUP_DIR / 'bristol_admin_codes.csv')
+    # create and save dataset 1
+    lsoa_lookup = create_lsoa_lookup(admin_codes_raw)
+    lsoa_lookup.write_csv(LOOKUP_DIR / 'lsoa_lookup.csv')
+
+    # create and save dataset 2
+    geography_lookup = create_georgraphy_lookup(admin_codes_raw)
+    geography_lookup.write_csv(LOOKUP_DIR / 'geography_lookup.csv')
