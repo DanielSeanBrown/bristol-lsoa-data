@@ -26,7 +26,7 @@ if __name__ == '__main__':
     epc_rating = pl.read_excel(RAW_DIR / 'epc_rating_raw.xlsx',
                                 sheet_name='3a',
                                 read_options={'skip_rows': 4})
-    bristol_lso_codes = pl.read_csv(LOOKUP_DIR / 'bristol_admin_codes.csv')
+    bristol_lso_codes = pl.read_csv(LOOKUP_DIR / 'lsoa_lookup.csv')
 
     # clean the dataset
     epc_rating = clean_data(epc_rating, bristol_lso_codes)
