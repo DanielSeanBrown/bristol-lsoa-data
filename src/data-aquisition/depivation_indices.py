@@ -3,16 +3,6 @@ from pathlib import Path
 
 # available at: https://www.ons.gov.uk/peoplepopulationandcommunity/housing/datasets/energyperformancecertificateepcbandcoraboveenglandandwales
 
-def get_root():
-    '''returns project root'''
-
-    # directory for this script
-    SCRIPT_DIR = Path(__file__).resolve().parent
-
-    # go up into project root
-    PROJECT_ROOT = SCRIPT_DIR.parent.parent
-
-    return PROJECT_ROOT# read in dataset from respective path
 
 def clean_data(data, filter_codes):
     pass

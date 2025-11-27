@@ -7,4 +7,4 @@ from src.utils.download import download_to_raw
 
 if __name__ == '__main__':
     download_from_url = 'https://opendata.westofengland-ca.gov.uk/api/explore/v2.1/catalog/datasets/lep_lsoa_geog/exports/csv?lang=en&qv1=(bristol)&timezone=Europe%2FLondon&use_labels=true&delimiter=%2C'
-    file_path = download_to_raw(download_url,'admin_codes_raw')
+    file_path = download_to_raw(download_url,'postcode_lookup_raw.csv')
