@@ -1,6 +1,5 @@
 from src.utils.download import download_from_url
 
-
 # dataset available at: https://opendata.bristol.gov.uk/datasets/d51a84ba68234432b9108491844b1e23_19/explore
 
 if __name__ == '__main__':

@@ -7,7 +7,7 @@ THIS_FILE = Path(__file__).resolve()
 PROJECT_ROOT = THIS_FILE.parents[2]
 
 # data directories
-DATSETS_DIR = PROJECT_ROOT / 'datasets'
-LOOKUP_DIR = DATSETS_DIR / 'lookup'
-RAW_DIR = DATSETS_DIR / 'raw'
-PROCESSED_DIR = DATSETS_DIR / 'processed'
+DATASETS_DIR = PROJECT_ROOT / 'datasets'
+LOOKUP_DIR = DATASETS_DIR / 'lookup'
+RAW_DIR = DATASETS_DIR / 'raw'
+PROCESSED_DIR = DATASETS_DIR / 'processed'

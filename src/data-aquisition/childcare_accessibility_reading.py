@@ -1,5 +1,5 @@
 import polars as pl
-from pathlib import Path
+from src.utils.paths import RAW_DIR, PROCESSED_DIR, LOOKUP_DIR
 
 # available at: https://www.ons.gov.uk/peoplepopulationandcommunity/educationandchildcare/datasets/childcareaccessibilityinenglanddata
 
@@ -41,9 +41,8 @@ def clean_data(data, filter_codes):
 
 if __name__ == '__main__':
     # read in datasets
-    PROJECT_ROOT = get_root()
-    bristol_admin_codes = pl.read_csv(PROJECT_ROOT / 'datasets' / 'processed' / 'bristol_admin_codes.csv')
-    cc_accessibility = pl.read_excel(PROJECT_ROOT / 'datasets' / 'raw' / 'childcareaccessibilityinengland.xlsx',
+    bristol_admin_codes = pl.read_csv(LOOKUP_DIR / 'lsoa_lookup.csv')
+    cc_accessibility = pl.read_excel(RAW_DIR / 'childcare_accessibility_raw.xlsx',
                                      sheet_name='Table_2',
                                      read_options={'skip_rows': 6})
 
@@ -51,5 +50,5 @@ if __name__ == '__main__':
     cc_accessibility = clean_data(cc_accessibility, bristol_admin_codes)
 
     # save dataset
-    save_file = PROJECT_ROOT / 'datasets' / 'processed' / 'childcare_accessibility.csv'
+    save_file = PROCESSED_DIR / 'childcare_accessibility.csv'
     cc_accessibility.write_csv(save_file)
